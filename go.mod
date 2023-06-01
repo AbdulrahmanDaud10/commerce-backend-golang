@@ -5,6 +5,14 @@ go 1.20
 require go.mongodb.org/mongo-driver v1.11.6
 
 require (
+	github.com/bradfitz/http2 v0.0.0-20160116213329-aa7658c0e990 // indirect
+	github.com/julienschmidt/httprouter v1.3.0 // indirect
+	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+)
+
+require (
+	github.com/anthdm/weavebox v0.9.7
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
