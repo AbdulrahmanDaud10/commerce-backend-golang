@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/AbdulrahmanDaud10/commerce-backend-golang/pkg/app"
 	"github.com/AbdulrahmanDaud10/commerce-backend-golang/pkg/repository"
 	"github.com/anthdm/weavebox"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,18 +18,18 @@ func handleAPIError(ctx *weavebox.Context, err error) {
 }
 
 func main() {
-	app := weavebox.New()
-	app.ErrorHandler = handleAPIError
+	application := weavebox.New()
+	application.ErrorHandler = handleAPIError
 
 	adminMW := &app.AdminAuthMiddleware{}
-	adminRoute := app.Box("/admin")
+	adminRoute := application.Box("/admin")
 	adminRoute.Use(adminMW.Authenticate)
 
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		panic(err)
 	}
-	productStore := repository.NewMongoProductStore(client.Database("ggcommerce"))
+	productStore := repository.NewMongoProductStore(client.Database("golangcommerce"))
 	productHandler := app.NewProductHandler(productStore)
 
 	// admin/product
@@ -37,5 +38,5 @@ func main() {
 	adminProductRoute.Get("/", productHandler.HandleGetProducts)
 	adminProductRoute.Post("/", productHandler.HandlePostProduct)
 
-	app.Serve(3001)
+	application.Serve(3001)
 }
